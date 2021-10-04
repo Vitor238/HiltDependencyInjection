@@ -2,15 +2,13 @@ package com.github.vitor238.hiltdependencyinjection
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    //filed injection
     @Inject
     lateinit var someClass: SomeClass
 
@@ -22,32 +20,27 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-@AndroidEntryPoint
-class MyFragment : Fragment() {
-    @Inject
-    lateinit var someOtherClass: SomeOtherClass
-
-}
-
-@ActivityScoped
 class SomeClass
 @Inject
 constructor(
-    private val someOtherClass: SomeOtherClass
+    //private val someInterfaceImpl: SomeInterface,
+    private val gson: Gson
 ) {
     fun doAThing(): String {
-        return "Look, I did a thing!"
-    }
-
-    fun doSomeAnotherThing(): String {
-        return someOtherClass.doSomeAnotherThing()
+        //return "Look I got: ${someInterfaceImpl.getAThing()}"
+        return "something"
     }
 }
 
-class SomeOtherClass
+class SomeInterfaceImpl
 @Inject
-constructor() {
-    fun doSomeAnotherThing(): String {
-        return "Look, I did some other thing!"
+constructor() : SomeInterface {
+    override fun getAThing(): String {
+        return "A Thing"
     }
+
+}
+
+interface SomeInterface {
+    fun getAThing(): String
 }
