@@ -2,7 +2,9 @@ package com.github.vitor238.hiltdependencyinjection
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -17,10 +19,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         println(someClass.doAThing())
-        println(someClass.doSomeAnotherThing())
     }
 }
 
+@AndroidEntryPoint
+class MyFragment : Fragment() {
+    @Inject
+    lateinit var someOtherClass: SomeOtherClass
+
+}
+
+@ActivityScoped
 class SomeClass
 @Inject
 constructor(
